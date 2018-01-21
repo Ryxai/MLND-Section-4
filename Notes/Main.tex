@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage{bibentry}
+\usepackage{etoolbox}
+\usepackage[]{geometry}
+\usepackage[english]{babel}
+\usepackage{mathpazo}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\makeatletter
+\makeatother
+\title{Reinforcement Learning}
+\bibliographystyle{plain}
+\author{}
+\date{}
+\pagestyle{empty}
+\thispagestyle{empty}
+\pagenumbering{gobble}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+\begin{document}
+\nocite{*}
+\maketitle
+\section{Markov Decision Processes}
+Reinforcement learning is similar to supervised learning however the generated 
+outputs and their correctness are not the direct feedback given to the algorithm 
+so it can improve. 
+
+\subsection{Markov Decision Processes}
+
+We begin with our states $S$ which represent the possible configurations of the
+agent and the world. 
+
+Actions are things that can be done at a particular state (edges connecting
+states). Given as $A$ or as $A(s)$ where $A(s)$ represents the actions of the
+particular state $s$.
+
+The model also known as the transition function or transition model, can be
+considered the physics of the world. $T(s,a,s')$ gives us the probability 
+$\Pr(s'\mid s,a)$. That is the probability of transitioning to state $s'$ given
+we began at state $s$ and took action $a$. 
+
+Markovian property is that only the present matters, we only have to condition
+on the current state. We can turn any process into a Markovian process by 
+forcing each state to remember the required context. This is similar to the 
+method of turning a FSM into a DFSM.
+
+The transition model is stationary and does not change. 
+
+Reward encompasses the domain knowledge and there are three main definitions
+$R(s)$, $R(s,a)$ and $R(s,a,s')$. All of the variations are mathematically 
+equivalent, just indicate the specificity and granularity. 
+
+All of these factors together create a Markov Decision Problem. 
+
+A policy is the solution, that is given a state $s$ it generates the action to 
+take $a$. The policy is written $\pi(s) \rightarrow a$. 
+
+The policy that maximizes the reward function is written $\pi*$ and optimizes
+the reward. 
+
+MDP does not require an explicit termination point. 
+
+MDP is plan-blind and only works from the current state of the world. It uses
+policies which can be used to infer plans but reflects all possible states in
+the world. Furthermore, it is resilient to stochasticity. 
+
+Delayed rewards are based on the idea that taking an immediate action does not
+result in receiving a distinction whether that action was correct or not
+immediately. That is there is a sequence of steps to be taken before a reward is 
+offered or denied. 
+
+Choosing which path in an MDP is the best is known as the temporal credit
+assignment problem. 
+
+Setting the reward to a negative value except for the terminal states, results
+in an optimization for the shortest path. 
+
+Minor changes to the reward function are important due to the multiplicative
+impact of stochasticity. 
+
+Rewards can be considered the teaching signal and act as domain knowledge. 
+
+Infinite horizons are represented by MDP that allow for infinite sequences of
+moves with no direct termination as a result of the number of moves taken. 
+
+With limited scope it is possible that risk/reward analysis results in different
+policies for the same given state. This idea can be represented by $\pi(s,t)
+\rightarrow a$. However this information can be encoded into the world directly
+by mapping it into the physics. That is, the 'separate' aspect method does not
+offer is not capable of a wider degree of representations, but that it may allow
+for those representations to be encoded with greater accessibility and more 
+minimal scope/computation. (Consider FSM and DFSM). 
+
+The differential of the utility of sequences is independent of their common 
+prefix states. That is given two sequences $A, B$ where $A = (s_0, s_1, s_2,
+\ldots)$ and $B = (s_0, s_1', s_2', \ldots)$ if $U(A) > U(B)$ then $U(A/s_0) > 
+U(B/s_0)$. This is referred to the stationary preferences. This follows from
+adding rewards. 
+
+We can define the utility of a sequence of states is defined $U(s_0, s_1, s_2,
+\ldots) = \sum_{t = 0}^\infty R(s_t)$. Infinite sequences however, degrade the 
+quality of this definition by making no difference between two functions that 
+both asymptotically trend towards infinity. We can change this definition to 
+reflect those circumstances, that is we can define $U(s_0, s_1, s_2) = 
+\sum_{t = 0}^\infty \gamma^tR(s_t)$ where $0 \leq \gamma < 1$. This forces the 
+reward function to converge over infinite steps. This is called discounted sums.
+
+It is a geometric series that is bounded $U(S) \leq \sum_{t = 0}^\infty \gamma^t
+R_{\text{max}} = \frac{R_{\text{max}}}{1 - \gamma}$. This is alternatively known
+as a discounted series that is infinite in length but returns a finite result.
+
+The optimal policy is defined $\Pi^* = \text{argmax}_\pi E\[\sum_t \gamma^t 
+R(s_t) \mid \Pi \]$.
+
+\end{document}
