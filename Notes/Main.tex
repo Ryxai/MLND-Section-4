@@ -21,7 +21,7 @@
 \begin{document}
 \nocite{*}
 \maketitle
-\section{Markov Decision Processes}
+\osection{Markov Decision Processes}
 Reinforcement learning is similar to supervised learning however the generated 
 outputs and their correctness are not the direct feedback given to the algorithm 
 so it can improve. 
@@ -111,6 +111,23 @@ R_{\text{max}} = \frac{R_{\text{max}}}{1 - \gamma}$. This is alternatively known
 as a discounted series that is infinite in length but returns a finite result.
 
 The optimal policy is defined $\Pi^* = \text{argmax}_\pi E\[\sum_t \gamma^t 
-R(s_t) \mid \Pi \]$.
+R(s_t) \mid \Pi \]$. The utility of a particular state, based on the optimal
+policy is designated $U^*$ and the utility of a particular state is defined as
+$U^*(s) = E\[\sum_{t = 0}^{\inf} \gamma^t R(s_t) \mid \Pi, s_0 = s\]$ which
+says that the expected state of states that will be seen given that policy and 
+state. 
+
+The reward for entering a state $s_i$ defined $R(s_i) \neq U^*(S_i)$. Utility is
+defined as long term feedback, whereas rewards are the short-term version. The 
+utility measures the future reward to be obtained given a specific policy, its a
+measure of delayed reward. 
+
+The optimal policy at a given state is defined as $\Pi^*(s) = \text{argmax}_a 
+\sum_{s'}T(s,a,s)U(s')$ where $U(s) = U^*(s)$. Then $U(s) = R(s) + \gamma 
+\text{max}_a \sum_{s'} T(s,a,s') U(s')$, also known as the Bellman equation. 
+
+Solving for the Bellman equation is difficult, due to non-linearity as a result
+solving based on the nearby utilities progressively is the solution. This update 
+equation is defined $\hat{U}_{t + 1}(s) = R(S) + \gamma \text{max}_a \sum_{s'} 
 
 \end{document}
