@@ -7,6 +7,7 @@
 \usepackage{listings}
 \usepackage{amsmath}
 \usepackage{mathtools}
+\usepackage{hyperref}
 \makeatletter
 \makeatother
 \title{Reinforcement Learning}
@@ -21,7 +22,7 @@
 \begin{document}
 \nocite{*}
 \maketitle
-\osection{Markov Decision Processes}
+\section{Markov Decision Processes}
 Reinforcement learning is similar to supervised learning however the generated 
 outputs and their correctness are not the direct feedback given to the algorithm 
 so it can improve. 
@@ -110,10 +111,10 @@ It is a geometric series that is bounded $U(S) \leq \sum_{t = 0}^\infty \gamma^t
 R_{\text{max}} = \frac{R_{\text{max}}}{1 - \gamma}$. This is alternatively known
 as a discounted series that is infinite in length but returns a finite result.
 
-The optimal policy is defined $\Pi^* = \text{argmax}_\pi E\[\sum_t \gamma^t 
-R(s_t) \mid \Pi \]$. The utility of a particular state, based on the optimal
+The optimal policy is defined $\Pi^* = \text{argmax}_\pi E[\sum_t \gamma^t 
+R(s_t) \mid \Pi ]$. The utility of a particular state, based on the optimal
 policy is designated $U^*$ and the utility of a particular state is defined as
-$U^*(s) = E\[\sum_{t = 0}^{\inf} \gamma^t R(s_t) \mid \Pi, s_0 = s\]$ which
+$U^*(s) = E[\sum_{t = 0}^{\inf} \gamma^t R(s_t) \mid \Pi, s_0 = s]$ which
 says that the expected state of states that will be seen given that policy and 
 state. 
 
@@ -128,6 +129,32 @@ The optimal policy at a given state is defined as $\Pi^*(s) = \text{argmax}_a
 
 Solving for the Bellman equation is difficult, due to non-linearity as a result
 solving based on the nearby utilities progressively is the solution. This update 
-equation is defined $\hat{U}_{t + 1}(s) = R(S) + \gamma \text{max}_a \sum_{s'} 
+equation is defined $\hat{U}_{t + 1}(s) = R(S) + \gamma \text{max}_a \sum_{s'}
+T(s,as') \hat{U}_t(s')$. Using the Bellman update equation spreads out the
+reward $R(s)$ via a \href
+{https://stats.stackexchange.com/questions/243384/deriving-bellmans-equation-in-reinforcement-learning}
+{contraction proof via value iteration}.
+
+When considering the correct policy it is important to remember that the function
+of $\Pi$ or the optimal policy is not a function of the utility $U$ but of the 
+rewards and state transitions. As a result, a policy may not get the utility 
+information of each state correct, but so long as the orer is correct (in 
+terms of states and transitions then this is sufficient).
+
+We can then find the best policy by an iterative improvement in the policy. This
+begins with an arbitrary policy $\Pi_0$, which is then improved via the bellman
+equation. However, using a fixed policy prevents the introduction of the argmax
+function which caused nonlinearity earlier. Thus the utility equation is as
+follows $U_t(s) = R(s) + \Gamma\sum_{s'}T(s, \Pi_t(s), s')U_t(s')$. This 
+function $U_t = U^{\Pi_t}$. As the series of n equations is linear it can be 
+solved via linear algebra. The improvement step follows $\Pi_{t + 1} = \text{arg
+max}_a \sum T(s,a,s')U_t(s')$. This process is known as policy iteration. The 
+time of the algorithm is typically $O(n^3)$. This process is guaranteed to 
+converge via the fact that there is a finite number of policies.
+
+MDPs act as a foundation for reinforcement learning but are not reinforcmenet
+learning in it of themselves.
+
+\section{Reinforcement Learning}
 
 \end{document}
