@@ -23,112 +23,112 @@
 \nocite{*}
 \maketitle
 \section{Markov Decision Processes}
-Reinforcement learning is similar to supervised learning however the generated 
-outputs and their correctness are not the direct feedback given to the algorithm 
-so it can improve. 
+Reinforcement learning is similar to supervised learning however the generated
+outputs and their correctness are not the direct feedback given to the algorithm
+so it can improve.
 
 \subsection{Markov Decision Processes}
 
 We begin with our states $S$ which represent the possible configurations of the
-agent and the world. 
+agent and the world.
 
 Actions are things that can be done at a particular state (edges connecting
 states). Given as $A$ or as $A(s)$ where $A(s)$ represents the actions of the
 particular state $s$.
 
 The model also known as the transition function or transition model, can be
-considered the physics of the world. $T(s,a,s')$ gives us the probability 
+considered the physics of the world. $T(s,a,s')$ gives us the probability
 $\Pr(s'\mid s,a)$. That is the probability of transitioning to state $s'$ given
-we began at state $s$ and took action $a$. 
+we began at state $s$ and took action $a$.
 
 Markovian property is that only the present matters, we only have to condition
-on the current state. We can turn any process into a Markovian process by 
-forcing each state to remember the required context. This is similar to the 
+on the current state. We can turn any process into a Markovian process by
+forcing each state to remember the required context. This is similar to the
 method of turning a FSM into a DFSM.
 
-The transition model is stationary and does not change. 
+The transition model is stationary and does not change.
 
 Reward encompasses the domain knowledge and there are three main definitions
-$R(s)$, $R(s,a)$ and $R(s,a,s')$. All of the variations are mathematically 
-equivalent, just indicate the specificity and granularity. 
+$R(s)$, $R(s,a)$ and $R(s,a,s')$. All of the variations are mathematically
+equivalent, just indicate the specificity and granularity.
 
-All of these factors together create a Markov Decision Problem. 
+All of these factors together create a Markov Decision Problem.
 
-A policy is the solution, that is given a state $s$ it generates the action to 
-take $a$. The policy is written $\pi(s) \rightarrow a$. 
+A policy is the solution, that is given a state $s$ it generates the action to
+take $a$. The policy is written $\pi(s) \rightarrow a$.
 
 The policy that maximizes the reward function is written $\pi*$ and optimizes
-the reward. 
+the reward.
 
-MDP does not require an explicit termination point. 
+MDP does not require an explicit termination point.
 
 MDP is plan-blind and only works from the current state of the world. It uses
 policies which can be used to infer plans but reflects all possible states in
-the world. Furthermore, it is resilient to stochasticity. 
+the world. Furthermore, it is resilient to stochasticity.
 
 Delayed rewards are based on the idea that taking an immediate action does not
 result in receiving a distinction whether that action was correct or not
-immediately. That is there is a sequence of steps to be taken before a reward is 
-offered or denied. 
+immediately. That is there is a sequence of steps to be taken before a reward is
+offered or denied.
 
 Choosing which path in an MDP is the best is known as the temporal credit
-assignment problem. 
+assignment problem.
 
 Setting the reward to a negative value except for the terminal states, results
-in an optimization for the shortest path. 
+in an optimization for the shortest path.
 
 Minor changes to the reward function are important due to the multiplicative
-impact of stochasticity. 
+impact of stochasticity.
 
-Rewards can be considered the teaching signal and act as domain knowledge. 
+Rewards can be considered the teaching signal and act as domain knowledge.
 
 Infinite horizons are represented by MDP that allow for infinite sequences of
-moves with no direct termination as a result of the number of moves taken. 
+moves with no direct termination as a result of the number of moves taken.
 
 With limited scope it is possible that risk/reward analysis results in different
 policies for the same given state. This idea can be represented by $\pi(s,t)
 \rightarrow a$. However this information can be encoded into the world directly
 by mapping it into the physics. That is, the 'separate' aspect method does not
 offer is not capable of a wider degree of representations, but that it may allow
-for those representations to be encoded with greater accessibility and more 
-minimal scope/computation. (Consider FSM and DFSM). 
+for those representations to be encoded with greater accessibility and more
+minimal scope/computation. (Consider FSM and DFSM).
 
-The differential of the utility of sequences is independent of their common 
+The differential of the utility of sequences is independent of their common
 prefix states. That is given two sequences $A, B$ where $A = (s_0, s_1, s_2,
-\ldots)$ and $B = (s_0, s_1', s_2', \ldots)$ if $U(A) > U(B)$ then $U(A/s_0) > 
+\ldots)$ and $B = (s_0, s_1', s_2', \ldots)$ if $U(A) > U(B)$ then $U(A/s_0) >
 U(B/s_0)$. This is referred to the stationary preferences. This follows from
-adding rewards. 
+adding rewards.
 
 We can define the utility of a sequence of states is defined $U(s_0, s_1, s_2,
-\ldots) = \sum_{t = 0}^\infty R(s_t)$. Infinite sequences however, degrade the 
-quality of this definition by making no difference between two functions that 
-both asymptotically trend towards infinity. We can change this definition to 
-reflect those circumstances, that is we can define $U(s_0, s_1, s_2) = 
-\sum_{t = 0}^\infty \gamma^tR(s_t)$ where $0 \leq \gamma < 1$. This forces the 
+\ldots) = \sum_{t = 0}^\infty R(s_t)$. Infinite sequences however, degrade the
+quality of this definition by making no difference between two functions that
+both asymptotically trend towards infinity. We can change this definition to
+reflect those circumstances, that is we can define $U(s_0, s_1, s_2) =
+\sum_{t = 0}^\infty \gamma^tR(s_t)$ where $0 \leq \gamma < 1$. This forces the
 reward function to converge over infinite steps. This is called discounted sums.
 
 It is a geometric series that is bounded $U(S) \leq \sum_{t = 0}^\infty \gamma^t
 R_{\text{max}} = \frac{R_{\text{max}}}{1 - \gamma}$. This is alternatively known
 as a discounted series that is infinite in length but returns a finite result.
 
-The optimal policy is defined $\Pi^* = \text{argmax}_\pi E[\sum_t \gamma^t 
+The optimal policy is defined $\Pi^* = \text{argmax}_\pi E[\sum_t \gamma^t
 R(s_t) \mid \Pi ]$. The utility of a particular state, based on the optimal
 policy is designated $U^*$ and the utility of a particular state is defined as
 $U^*(s) = E[\sum_{t = 0}^{\inf} \gamma^t R(s_t) \mid \Pi, s_0 = s]$ which
-says that the expected state of states that will be seen given that policy and 
-state. 
+says that the expected state of states that will be seen given that policy and
+state.
 
 The reward for entering a state $s_i$ defined $R(s_i) \neq U^*(S_i)$. Utility is
-defined as long term feedback, whereas rewards are the short-term version. The 
+defined as long term feedback, whereas rewards are the short-term version. The
 utility measures the future reward to be obtained given a specific policy, its a
-measure of delayed reward. 
+measure of delayed reward.
 
-The optimal policy at a given state is defined as $\Pi^*(s) = \text{argmax}_a 
-\sum_{s'}T(s,a,s)U(s')$ where $U(s) = U^*(s)$. Then $U(s) = R(s) + \gamma 
-\text{max}_a \sum_{s'} T(s,a,s') U(s')$, also known as the Bellman equation. 
+The optimal policy at a given state is defined as $\Pi^*(s) = \text{argmax}_a
+\sum_{s'}T(s,a,s)U(s')$ where $U(s) = U^*(s)$. Then $U(s) = R(s) + \gamma
+\text{max}_a \sum_{s'} T(s,a,s') U(s')$, also known as the Bellman equation.
 
 Solving for the Bellman equation is difficult, due to non-linearity as a result
-solving based on the nearby utilities progressively is the solution. This update 
+solving based on the nearby utilities progressively is the solution. This update
 equation is defined $\hat{U}_{t + 1}(s) = R(S) + \gamma \text{max}_a \sum_{s'}
 T(s,as') \hat{U}_t(s')$. Using the Bellman update equation spreads out the
 reward $R(s)$ via a \href
@@ -136,25 +136,115 @@ reward $R(s)$ via a \href
 {contraction proof via value iteration}.
 
 When considering the correct policy it is important to remember that the function
-of $\Pi$ or the optimal policy is not a function of the utility $U$ but of the 
-rewards and state transitions. As a result, a policy may not get the utility 
-information of each state correct, but so long as the orer is correct (in 
+of $\Pi$ or the optimal policy is not a function of the utility $U$ but of the
+rewards and state transitions. As a result, a policy may not get the utility
+information of each state correct, but so long as the orer is correct (in
 terms of states and transitions then this is sufficient).
 
 We can then find the best policy by an iterative improvement in the policy. This
 begins with an arbitrary policy $\Pi_0$, which is then improved via the bellman
 equation. However, using a fixed policy prevents the introduction of the argmax
 function which caused nonlinearity earlier. Thus the utility equation is as
-follows $U_t(s) = R(s) + \Gamma\sum_{s'}T(s, \Pi_t(s), s')U_t(s')$. This 
-function $U_t = U^{\Pi_t}$. As the series of n equations is linear it can be 
+follows $U_t(s) = R(s) + \Gamma\sum_{s'}T(s, \Pi_t(s), s')U_t(s')$. This
+function $U_t = U^{\Pi_t}$. As the series of n equations is linear it can be
 solved via linear algebra. The improvement step follows $\Pi_{t + 1} = \text{arg
-max}_a \sum T(s,a,s')U_t(s')$. This process is known as policy iteration. The 
-time of the algorithm is typically $O(n^3)$. This process is guaranteed to 
+max}_a \sum T(s,a,s')U_t(s')$. This process is known as policy iteration. The
+time of the algorithm is typically $O(n^3)$. This process is guaranteed to
 converge via the fact that there is a finite number of policies.
 
 MDPs act as a foundation for reinforcement learning but are not reinforcmenet
 learning in it of themselves.
 
 \section{Reinforcement Learning}
+
+There are two major versions of determining policies:
+\begin{enumerate}
+    \item Planning is the process of taking in a model and then returning a
+    policy.
+    \item Reinforcement learning is the process of being given a number of
+    state transitions and then learning from the optimal policy given those
+    transitions.
+\end{enumerate}
+
+Reinforcement learning is really reward maximization. RL is responsible for
+strengthening the response to the stimulus.
+
+We can further deconstruct the reinforcement learning into two smaller
+components;
+\begin{enumerate}
+        \item Given a set of transitions a modeler builds a model from it.
+        \item Giben a model a simulator generates a set of transitions from it.
+\end{enumerate}
+
+Depending on the algorithm chosen and the policies, simulating can actually
+be highly expensive due to combinatorial explosion.
+
+Value iteration and policy iteration are types of planning algorithms.
+
+Model based reinforcement learning is defined as $$\text{transitions}
+\rightarrow \text{modeler} \rightarrow \text{model} \rightarrow \rightarrow
+\text{Planner} \rightarrow \text{policy}$$.
+
+Reinforcement based planners are defined as $$\text{model} \rightarrow
+\text{Simulator} \rightarrow \text{transitions} \rightarrow \text{Learner}
+\rightarrow \text{policy}$$.
+
+Reinforcement learning on policies directly is known as policy search. However,
+it suffers from issues with the temporal credit assignment problem. That is,
+because feedback is only recieved at the end of a series of actions and not
+during that then it is extraordinarily difficult to determine the next best
+action to take. This is overcome by changing the formulation of the problem
+to MDPs.
+
+RL  on the utility function is known as value-based approaches. It is
+difficult to transfer utility into policies direct using the bellman
+equations so itermediary methods are used.
+
+RL using the transition functions are the rewards function is known as model
+based RL. It is possible to use value iteration to solve the bellman equations.
+
+
+Encoding in desired actions taken into the Bellman equations results in the
+following function $Q(s,a) = R(s) + \gamma\sum_{s'}T(s,a,s')\text{max}_{a'}Q(s',
+a')$. That is the equation maximizes the utility of the next step given a
+specific state and action. It allows for the comparison of different actions.
+
+Q learning is done by computing the $Q$ of given values, we can define $U(s) =
+\text{max}_aQ(s,a)$ simply by always taking the best action and further we can
+define $\Pi^*(s) = \text{argmax}_aQ(s,a)$. This technique where we solve for the
+$Q$ is known as Q-learning which the evaluation of the Bellman equations from
+data.
+
+Q-learning is difficult as there is no immediate access to $T(s,a,s')$ or the
+reward function $R(s)$.
+
+A transition is encoded as $<s,a,r,s'>$ where $s$ is the state, $a$ is the
+action taken, $r$ is the reward given for taking an action and $s'$ is the
+state after the action is taken. We use an estimate of the $Q$ function which
+is defined $\hat{Q}(S,a) \xrightarrow{\alpha} r + \gamma\text{max}_{a'}\hat{Q}(s
+',a')$ where $\alpha$ is the learning rate. $\hat{Q}(s,a)$ can be considered the
+utility of the current state.
+
+The learning rate shown as $v \xleftarrow{\alpha} x$ is actually represented as
+$v \leftarrow (1 - \alpha)v + \alphax$.
+
+Using a decaying learning rate, the supposition is that the $Q$ function
+computes $E[r + \gamma\text{max}_{a'}Q(s',a')]$ which can then be written as
+$R(s) + \gammaE_{s'}[\text{max}_{a'}Q(s',a')]$ which further reduces to $R(s) +
+\gamma\sum_{s'}T(s,a,s')\hat{Q}(s',a')$. However due to the $\hat{Q}$ changing
+over time, this only works as a generalized explanation and does not work as
+a theorem of the convergence.
+
+Given an arbitrary $\hat{Q}$, and the update function $\hat{Q}(s,a) \xleftarrow{
+\alpha_t} r + \gamma\text{max}_{a'}\hat{Q}(s',a')$. Then using the update
+function we have $\hat{Q}(s,a) \rightarrow Q(s,a)$ if $s,a$ are visited
+infinitely often and $\sum_t \alpha_t = \inf$, $\sum_t \alpha_t^2 < \inf$, $s'
+~ T(s,a,s')$ and $r ~ R(s)$. That is a the function uses a decaying learning
+rate, next state $s'$ is drawn from the state transition function and the next
+reward is drawn from the reward function. Then we have a solution to the
+Bellman equations.
+
+Q-learning is actually a family of different algorithms wherein the initial
+$\hat{Q}$, decay rate of $\alpha$ and how actions $s'$ are chosen differently.
 
 \end{document}
