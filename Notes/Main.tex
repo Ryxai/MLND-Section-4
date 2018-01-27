@@ -214,12 +214,7 @@ Q learning is done by computing the $Q$ of given values, we can define $U(s) =
 define $\Pi^*(s) = \text{argmax}_aQ(s,a)$. This technique where we solve for the
 $Q$ is known as Q-learning which the evaluation of the Bellman equations from
 data.
-
-Q-learning is difficult as there is no immediate access to $T(s,a,s')$ or the
-reward function $R(s)$.
-
-A transition is encoded as $<s,a,r,s'>$ where $s$ is the state, $a$ is the
-action taken, $r$ is the reward given for taking an action and $s'$ is the
+Q-learning is difficult as there is no immediate access to $T(s,a,s')$ or the reward function $R(s)$.  A transition is encoded as $<s,a,r,s'>$ where $s$ is the state, $a$ is the action taken, $r$ is the reward given for taking an action and $s'$ is the
 state after the action is taken. We use an estimate of the $Q$ function which
 is defined $\hat{Q}(S,a) \xrightarrow{\alpha} r + \gamma\text{max}_{a'}\hat{Q}(s
 ',a')$ where $\alpha$ is the learning rate. $\hat{Q}(s,a)$ can be considered the
@@ -246,5 +241,75 @@ Bellman equations.
 
 Q-learning is actually a family of different algorithms wherein the initial
 $\hat{Q}$, decay rate of $\alpha$ and how actions $s'$ are chosen differently.
+The policy of choosing actions is incredibly important for how the algorithm 
+will behave. It is important to choose an action choice policy that is resistant
+to the arbitrary $\hat{Q}$. The greedy policy (using $\hat{Q}$) finds the local
+minima. 
+
+There are several ways of overcoming the greedy minima. Simulated annealing
+(that is taking a random action sometimes) can help to overcome these
+difficulties. The resultant action choosing policy $\hat{\Pi}(s) = \text{argmax}
+_a\hat{Q}(s,a)$ with probability $1 - \epsilon$ and $\hat{\Pi}(s) = \text{random
+action}$ otherwise (that is probability $\epsilon$). MDP state-action pairs that 
+don't link to any other aren't considered in the progress and the simulated 
+annealing as they are unreachable. Therefore it is important to start in
+the subgroup of states that leads to a final exit solution. However, this 
+problem of finding a path is a complicated problem in it of itself and is a 
+graph search problem with an exponential search factor.
+
+If the exploration is greedy in the limit with infinite exploration it refers to
+Q-learning with a decaying $\epsilon$ much like a decaying learning rate. Using 
+GLE we find that $\hat{Q} \rightarrow Q$ and $\hat{\Pi} \rightarrow \Pi^*$. 
+
+The explanation-exploitation dilemma wherein there is a trade-off between 
+learning and use of that learning results from there being a singular agent
+doing the exploitation and explanation. 
+
+Encoding previous learning is possible for the learning algorithm and improve
+its behavior. The EED is a fundamental tradeoff in RL. There is an inherent link
+between model learning and planning. 
+
+By setting the initial $\hat{Q}$ high, then the algorithm will search more
+readily and is known as optimism in the face of uncertainty. 
+
+Generalizing MDPs allows for function approximation.
+
+\section{Game Theory}
+
+Game theory can be defined as the mathematics of conflict. That is moving from 
+single agents to multiple agents. 
+
+Other agents can be considered in the transition model, however it is more 
+effective to consider them explicitly.
+
+A zero sum game is a game in which the sum of each reward state is always
+constant. 
+
+A strategy is a mapping of all possible states to actions.
+
+Pure strategies are strategies that provide a complete definition of how a
+player will play in a game.
+
+The matrix form of a game encodes the games outcomes as a result of any and all
+strategies played by all players and contains the complete outcome and
+understanding of the entire game space. 
+
+In a two player game, a player who goes first needs to consider the worst case
+counter strategy. If the two players have opposite winning conditions where 
+one's gain is another's loss. Minimax is the way in which the game is played out
+by both players, the minimax strategy results in the game's value which is the
+output cell of the minimax strategy. Formally in a 2-player, zero-sum
+deterministic game of perfect information Minimax $\equiv$ Maximin and there 
+always exists an optimal pure strategy for each player. 
+
+In games, agents try to find the strategy that maximizes reward with the 
+understanding that all other agents are also trying to maximize their reward at
+that agents expense. 
+
+Von Neumann's Theorem: For 2-player zero-sum non-deterministic game of perfect
+information Minimax $\equiv$ Maximin and there exists an optimal pure strategy
+for each player. 
+
+
 
 \end{document}
