@@ -214,11 +214,14 @@ Q learning is done by computing the $Q$ of given values, we can define $U(s) =
 define $\Pi^*(s) = \text{argmax}_aQ(s,a)$. This technique where we solve for the
 $Q$ is known as Q-learning which the evaluation of the Bellman equations from
 data.
-Q-learning is difficult as there is no immediate access to $T(s,a,s')$ or the reward function $R(s)$.  A transition is encoded as $<s,a,r,s'>$ where $s$ is the state, $a$ is the action taken, $r$ is the reward given for taking an action and $s'$ is the
-state after the action is taken. We use an estimate of the $Q$ function which
-is defined $\hat{Q}(S,a) \xrightarrow{\alpha} r + \gamma\text{max}_{a'}\hat{Q}(s
-',a')$ where $\alpha$ is the learning rate. $\hat{Q}(s,a)$ can be considered the
-utility of the current state.
+
+Q-learning is difficult as there is no immediate access to $T(s,a,s')$ or the 
+reward function $R(s)$.  A transition is encoded as $<s,a,r,s'>$ where $s$ is 
+the state, $a$ is the action taken, $r$ is the reward given for taking an action
+and $s'$ is the state after the action is taken. We use an estimate of the 
+$Q$ function which is defined $\hat{Q}(S,a) \xrightarrow{\alpha} r + 
+\gamma\text{max}_{a'}\hat{Q}(s',a')$ where $\alpha$ is the learning rate. 
+$\hat{Q}(s,a)$ can be considered the utility of the current state.
 
 The learning rate shown as $v \xleftarrow{\alpha} x$ is actually represented as
 $v \leftarrow (1 - \alpha)v + \alphax$.
@@ -339,6 +342,48 @@ nash equilibrium if and only if $\forall_i S_I^* = \text{argmax}_{s_i}
 the idea that no player has any reason to change their strategy. Nash
 equilibriums can be applied to pure and mixed strategies, the mixed version 
 deals with probabilities over the strategy distributions. 
+
+In the n-player pure strategy game, if elmination of strictly dominated 
+strategies eliminates all but one combination, that combination is the 
+unique Nash Equilibrium. Furthermore, in multi-round games elimination is 
+done until no more is possible, then on the next round the process is continued
+making NE an iterable process. 
+
+Any NE strategies will survive iterated elinimation of strictly dominated 
+strategies.
+
+If $n$ is finite and $\forall_i S_i$ is finite then $\exists$ (mixed) NE. That
+is there is always a NE of some variety. 
+
+Iterated games create different dominant strategies than singular rounds 
+wherein the dominant strategy may fall to a different NE than the initial 
+setup of the NE. 
+
+Symmetric games suffer from the tit-for-tat strategy more strongly than other
+types of games.  
+
+A way of evaluating the NE of a many step iterated game is to start 
+at the last game and determine the value of that game, then to work your way
+back over each game prior and then via proof by induction the games' values
+are built back to the original game. Thus via an iterated game is the NE of a 
+single game. We can do this via the 'sunk cost fallacy'. 
+
+Given a game where the NE is $x$, $n$ repeated iterations of the game will 
+result in $n$ repeated same NEs. This theorem holds for a single NE. 
+
+The matrices of the games includes all representative information encoded with
+it of the future, past and present. Re-encoding of the game can be done to 
+cause reevaluation of the game conditions which causes the values of certain
+game cells. 
+
+Mechanism design is the process of evaluating and designing incentives to
+get particular behavior, ie re-encoding the game. 
+
+\section{More Game Theory}
+
+A generalization of MDPs and iterative games is stochastic games (Markov) 
+games and provide a model for multiagent RL. 
+
 
 
 
