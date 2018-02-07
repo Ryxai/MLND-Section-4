@@ -384,7 +384,31 @@ get particular behavior, ie re-encoding the game.
 A generalization of MDPs and iterative games is stochastic games (Markov) 
 games and provide a model for multiagent RL. 
 
+The NE of a SG (stochastic game) is a pair of policies where neither wants to
+deviate. 
 
+Stochastic games are invented by Shapley and encode the following items:
+\begin{itemize}
+	\item States $S$
+	\item Actions for player $i$, $A_i$
+	\item Transitions $T(s, (a,b), s')$
+	\item Rewards for player $i$, $R_i$ where $R_1(s,(a,b)), R_2(s,(a,b))$
+	\item Discount $\gamma$
+\end{itemize}
 
+Differing definitions of MDPs and SG include the discount  others however do not
+include them. 
 
+SG is a generalization of MDPs. 
+
+Zero-sum SG is based can be extrapolated from MDPs and we can use a generalized
+version of the Bellman equation to accomplish this. 
+
+We begin with the Bellman equation $\Q_i^*(s,(a,b)) = R_i(s_i(a,b)) + \gamma
+\sum_{s'} T(s,(a,b),s')\text{max}_{a',b'}Q_i^*(s',(a',b'))$. The problem with
+the initial formulation for SG is that the $Q^*_i(s',(a',b'))$  assumes that
+every joint action is designed to benefit the maximizer, which does not hold for
+SG (holds for single player games). 
+
+		
 \end{document}
