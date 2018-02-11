@@ -379,6 +379,7 @@ game cells.
 Mechanism design is the process of evaluating and designing incentives to
 get particular behavior, ie re-encoding the game. 
 
+
 \section{More Game Theory}
 
 A generalization of MDPs and iterative games is stochastic games (Markov) 
@@ -410,5 +411,8 @@ the initial formulation for SG is that the $Q^*_i(s',(a',b'))$  assumes that
 every joint action is designed to benefit the maximizer, which does not hold for
 SG (holds for single player games). 
 
+By a modification to the Bellman equation so that the next step assumes a zero 
+sum game we wind up with the modification $Q_i^*(s,(a,b)) = R_i(s_i(a,b)) + 
+\gamma\sum_{s'}T(s, (a,b), s')$
 		
 \end{document}
