@@ -413,6 +413,53 @@ SG (holds for single player games).
 
 By a modification to the Bellman equation so that the next step assumes a zero 
 sum game we wind up with the modification $Q_i^*(s,(a,b)) = R_i(s_i(a,b)) + 
-\gamma\sum_{s'}T(s, (a,b), s')$
-		
+\gamma\sum_{s'}T(s, (a,b), s')\text{minmax}_{a'b'}Q_i^*(s',(a',b'))$. The
+traditional zero-sum game is two player. A three player zero sum game is 
+actually just a general sum-game. Thus Q-learning can be done iteratively 
+whereby for the state $<s,(a,b),(r_1,r_2), s'>: Q_i(s,(a,b)) \xleftarrow{\alpha}
+r_i + \gamma\text{minimax}_{a'b'}Q(s',(a',b'))$. This is alternatively known 
+as the minimax-Q equation. 
+
+There are a number of benefits to this modification.
+\begin{itemize}
+\item Value iteration works. 
+\item Minimax-Q converges under the same conditions of Q-learning. 
+\item The solution to $Q^*$ is unique. 
+\item The policies pursued by two agents running the minimax-Q will converge,
+seeing as there is one unique solution to $Q^*$ and can be computed
+independently.
+\item The update is polynomially efficient. 
+\item $Q^*$ is sufficient to specify a policy.
+\end{itemize}
+
+Essentially by using minimax-q we gain all the benefits of Q-learning except 
+for the primary disadvantadge that due to the complication of another agent, 
+it is not possible to solve the MDP itself in polynomial time. Value iteration
+will get us close but is close to simulated annealing rather than an actual 
+solution to the game created by the MDP. 
+
+General sum games are games where any number of players can be involved and
+any reward distribution schema. We generalize Q-learning to these circumstances
+by introducing the Nash Equilibrium into the iteration equation. $Q_i^*(s,(a,b))
+= R_i(s,(a,b)) + \gamma\sum_{s'}T(s,(a,b),s')\text{NE}_{a'b'}Q_i^*(s',(a',b'))$
+And then generating the Q-learning function we have for the state $<s,(a,b),(r_1
+,r_2),s'>$ that $Q_i(s,(a,b)) \xleftarrow{\alpha} r_i + \gamma\text{NE}_{a'b'}
+Q_i(s',(a',b'))$, which is known as Nash-Q.
+
+However with Nash-Q, value iteration doesn't work, and Nash-Qs don't converge, 
+there aren't unique solutions to $Q^*$, policies can't be determined 
+independently. The update is not efficient and is in the class $P = PPAD$. 
+Sadly and finally $Q$ functions are not sufficient to specify policy. 
+
+There are a number of search/rank techniques:
+\begin{itemize}
+\item Repeated stochastic games resulting in 'folk knowledge'.
+\item Cheap-talk (non-binding communication), resulting in a correlated 
+equilibria.
+\item Cognitive hierarchy, assume that other players don't have full 
+computational resources then can achieve the best response.
+\item Side payments (coco values) which allows for balancing for the zero-sum
+with mutual
+\end{itemize}
+
 \end{document}
